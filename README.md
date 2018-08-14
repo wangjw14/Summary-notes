@@ -1,2 +1,1 @@
-# Summary-notes
-A repository used for taking notes.
+# A repository used for taking notes.
