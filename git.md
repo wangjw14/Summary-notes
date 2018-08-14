@@ -2,7 +2,7 @@
 
 ### 一、git基础
 
-####git 配置
+#### git 配置
 
 ```shell
 git config --global user.name "Your Name"
@@ -13,7 +13,7 @@ git <verb> --help             # 获取帮助
 git help <verb>               # 获取帮助
 ```
 
-####创建版本库
+#### 创建版本库
 
 ```shell
 git init
@@ -22,14 +22,14 @@ git commit -m <message>
 git commit -a -m 'skip add steps'
 ```
 
-###二、版本库常用操作
+### 二、版本库常用操作
 
 ```shell
 git status             # 查看工作区状态
 git diff <file>        # 如果工作区有被修改，可以用该命令查看修改内容
 ```
 
-####版本回退
+#### 版本回退
 
 ```shell
 git log                           # 查看提交历史
@@ -92,7 +92,7 @@ git stash list                    # 查看保存了哪些现场
 git branch -D <name>              # 强行删除未合并的分支，如feature分支
 ```
 
-####多人协作
+#### 多人协作
 
 ```shell
 git remote                        # 查看远程库的信息
