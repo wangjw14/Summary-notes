@@ -46,14 +46,14 @@
 
   $\mathcal{V}$  : finite set of vocabulary
 
-  $$\mathcal{V}^{\dagger}$$ : an infinite set of strings (quite large, may have hundreds of billions of words nowdays)
+  $\mathcal{V}^{\dagger}$ : an infinite set of strings (quite large, may have hundreds of billions of words nowdays)
 
 - **task**
 
   to learn a probability distribution $p$ that satisfies 
 
 $$
-\sum_{x\in{\mathcal{V}}^\dagger} p(x) = 1, p(x)\ge0 \;for\;all\; x \in \mathcal{V}^\dagger
+\sum_{x\in{\mathcal{V}}^\dagger} p(x) = 1, p(x)\ge0 \quad for\, all \, x \in \mathcal{V}^\dagger
 $$
 
 
@@ -95,16 +95,24 @@ $$
   $$
   then
   $$
-  P(X_1=x_1,X_2=x_2,...,X_n=x_n)\\
-  \qquad =P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X{i-1}=x_{i-1})
+  \begin{equation}
+  \begin{aligned}
+  &\qquad P(X_1=x_1,X_2=x_2,...,X_n=x_n)\\
+  & =P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X{i-1}=x_{i-1})
+  \end{aligned}
+  \end{equation}
   $$
 
 - Second-Order Markov process
   $$
-  P(X_1=x_1,X_2=x_2,...,X_n=x_n) \\ 
-  = P(X_1=x_1)\times P(X_2=x_2|X_1=x_1)\\
-  \times \prod_{i=3}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})\\
-  =\prod_{i=1}^nP(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
+  \begin{equation}
+  \begin{aligned}
+  & \quad P(X_1=x_1,X_2=x_2,...,X_n=x_n) \\ 
+  &= P(X_1=x_1)\times P(X_2=x_2|X_1=x_1)\\
+  &\quad \times \prod_{i=3}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})\\
+  & =\prod_{i=1}^nP(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
+  \end{aligned}
+  \end{equation}
   $$
   Assume $x_0=x_{-1}=* $ , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
 
