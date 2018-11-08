@@ -1,5 +1,9 @@
 # Week 1 Introduction and language model
 
+```
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+```
+
 ## 一、Introduction to NLP
 
 ### what is NLP?
