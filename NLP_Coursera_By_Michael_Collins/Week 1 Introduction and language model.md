@@ -1,9 +1,5 @@
 # Week 1 Introduction and language model
 
-```
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-```
-
 ## 一、Introduction to NLP
 
 ### what is NLP?
@@ -91,8 +87,8 @@ $$
 
 - First-Order Markov process
   $$
-  P(X_1=x_1,X_2=x_2,...,X_n=x_n)
-  \\=P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X_1=x_1,...X_{i-1}=x_{i-1})
+  P(X_1=x_1,X_2=x_2,...,X_n=x_n)\\ 
+  \qquad \qquad \qquad=P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X_1=x_1,...X_{i-1}=x_{i-1})
   $$
   the first-order Markov assumption: for any $i \in \{2...n\}$ , and for any $x_1...x_n$ ,
   $$
@@ -100,13 +96,16 @@ $$
   $$
   then
   $$
-  P(X_1=x_1,X_2=x_2,...,X_n=x_n)
-  \\=P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X{i-1}=x_{i-1})
+  P(X_1=x_1,X_2=x_2,...,X_n=x_n)\\
+  \qquad =P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X{i-1}=x_{i-1})
   $$
 
 - Second-Order Markov process
   $$
-  P(X_1=x_1,X_2=x_2,...,X_n=x_n) \\= P(X_1=x_1)\times P(X_2=x_2|X_1=x_1)\\\times \prod_{i=3}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})\\=\prod_{i=1}^nP(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
+  P(X_1=x_1,X_2=x_2,...,X_n=x_n) \\ 
+  = P(X_1=x_1)\times P(X_2=x_2|X_1=x_1)\\
+  \times \prod_{i=3}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})\\
+  =\prod_{i=1}^nP(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
   $$
   Assume $x_0=x_{-1}=*$ , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
 
