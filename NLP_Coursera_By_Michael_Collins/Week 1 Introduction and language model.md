@@ -46,7 +46,7 @@
 
   $\mathcal{V}$  : finite set of vocabulary
 
-  $$\mathcal{V}^{\dagger}$$: an infinite set of strings (quite large, may have hundreds of billions of words nowdays)
+  $$\mathcal{V}^{\dagger}$$ : an infinite set of strings (quite large, may have hundreds of billions of words nowdays)
 
 - **task**
 
@@ -106,7 +106,7 @@ $$
   \times \prod_{i=3}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})\\
   =\prod_{i=1}^nP(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
   $$
-  Assume $x_0=x_{-1}=*$  , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
+  Assume $x_0=x_{-1}=* $ , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
 
 ### Trigram models
 
@@ -121,7 +121,7 @@ $$
   $$
   where $x_0=x_{-1}=*$  .
 
-###Evaluating language models: perplexity
+### Evaluating language models: perplexity
 
 - For test data $s_1,s_2,\cdots,s_m$ , define perplexity as
 
@@ -141,7 +141,7 @@ $$
   $$
   for all $w \in \mathcal{V} \cup \{\mathsf{STOP}\}$ , and all $u,v\in \mathcal{V}\cup\{*\}$ , we can get perplexity equals to $N$. 
 
-###Estimation techniques:
+### Estimation techniques:
 
 - Maximum likelihood estimate
   $$
@@ -175,7 +175,9 @@ $$
   - Then,
 
   $$
-  q(w_i|w_{i-2},w_{i-1})=\quad\lambda _1\times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\ \qquad\qquad\qquad +\lambda _2 \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\ \qquad\qquad + \lambda _3 \times q_{\mathsf{ML}}(w_i)
+  q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1 \times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\
+  \qquad \qquad \qquad + \lambda _2 \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\
+  \qquad \qquad + \lambda _3 \times q_{\mathsf{ML}}(w_i)
   $$
 
   ​	where $\lambda _1 + \lambda _2 + \lambda _3 = 1$ , and $\lambda _i \ge 0 $ for all $i$ .
