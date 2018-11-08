@@ -87,8 +87,7 @@ $$
 
 - First-Order Markov process
   $$
-  P(X_1=x_1,X_2=x_2,...,X_n=x_n)\\ 
-  \qquad \qquad \qquad=P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X_1=x_1,...X_{i-1}=x_{i-1})
+  P(X_1=x_1,X_2=x_2,...,X_n=x_n) \\ \qquad \qquad \qquad=P(X_1=x_1)\prod_{i=2}^nP(X_i=x_i|X_1=x_1,...X_{i-1}=x_{i-1})
   $$
   the first-order Markov assumption: for any $i \in \{2...n\}$ , and for any $x_1...x_n$ ,
   $$
@@ -107,7 +106,7 @@ $$
   \times \prod_{i=3}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})\\
   =\prod_{i=1}^nP(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
   $$
-  Assume $x_0=x_{-1}=*$ , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
+  Assume $x_0=x_{-1}=*$  , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
 
 ### Trigram models
 
@@ -175,11 +174,11 @@ $$
 
   - Then,
 
-  - $$
-    q(w_i|w_{i-2},w_{i-1})=\quad\lambda _1\times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\ \qquad\qquad\qquad +\lambda _2 \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\ \qquad\qquad + \lambda _3 \times q_{\mathsf{ML}}(w_i)
-    $$
+  $$
+  q(w_i|w_{i-2},w_{i-1})=\quad\lambda _1\times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\ \qquad\qquad\qquad +\lambda _2 \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\ \qquad\qquad + \lambda _3 \times q_{\mathsf{ML}}(w_i)
+  $$
 
-    where $\lambda _1 + \lambda _2 + \lambda _3 = 1$ , and $\lambda _i \ge 0 $ for all $i$ .
+  ​	where $\lambda _1 + \lambda _2 + \lambda _3 = 1$ , and $\lambda _i \ge 0 $ for all $i$ .
 
   - Estimate the value of $\lambda$
 
