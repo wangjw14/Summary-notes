@@ -221,13 +221,79 @@ $$
     \qquad \qquad \qquad + \lambda _2^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\
     \qquad \qquad + \lambda _3^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i)
     $$
-    where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 $ for all $i$ .
+    ​	where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 $ for all $i$ .
 
-- discounting methods
+- Discounting methods
+
+  - discount counts: $\mathsf{Count}^*(x)= \mathsf{Count}(x)-0.5$ 
+  - miss probability mass:
+
+  $$
+  \alpha(w_{i-1}) = 1- \sum_w \frac{\mathsf{Count}^*(w_{i-1},w_i)}{\mathsf{Count}(w_{i-1})}
+  $$
+
+  - Katz Back-Off models:
+
+    - A bigram model
+
+      Define two sets
+
+    $$
+    \mathcal{A}(w_{i-1}) = \{w:\mathsf{Count}(w_{i-1},w)>0\}
+    $$
+
+    $$
+    \mathcal{B}(w_{i-1}) = \{w:\mathsf{Count}(w_{i-1},w)=0\}
+    $$
+
+    ​	The model
+    $$
+    q_{BO}(w_i|w_{i-1})=
+    \begin{cases}
+    \frac{\mathsf{Count}^*(w_{i-1},w_i)}{\mathsf{Count}(w_{i-1})} & \text{if} \ w_i \in \mathcal{A}(w_{i-1})\\[3ex]
+    \alpha(w_{i-1})\frac{q_{\mathsf{ML}(w_i)}}{\sum_{w\in \mathcal{B}(w_{i-1})}q_{\mathsf{ML}}(w)} & \text{if} \ w_i \in \mathcal{B}(w_{i-1})\\[3ex]
+    \end{cases}
+    $$
+    ​	where 
+    $$
+    \alpha(w_{i-1}) = 1- \sum_{w\in \mathcal{A}(w_{i-1})} \frac{\mathsf{Count}^*(w_{i-1},w_i)}{\mathsf{Count}(w_{i-1})}
+    $$
+
+    - A trigram model
+
+      Define two sets:
+
+    $$
+    \mathcal{A}(w_{i-2},w_{i-1}) = \{w:\mathsf{Count}(w_{i-2},w_{i-1},w)>0\}
+    $$
+
+    $$
+    \mathcal{B}(w_{i-2},w_{i-1}) = \{w:\mathsf{Count}(w_{i-2},w_{i-1},w)=0\}
+    $$
+
+    ​	A trigram model is defined in terms of the bigram model:
+    $$
+    q_{BO}(w_i|w_{i-2},w_{i-1})=
+    \begin{cases}
+    \frac{\mathsf{Count}^*(w_{i-2},w_{i-1},w_i)}{\mathsf{Count}(w_{i-2},w_{i-1})} & \text{if} \ w_i \in \mathcal{A}(w_{i-2},w_{i-1})\\[3ex]
+    \alpha(w_{i-2},w_{i-1})\frac{q_{\mathsf{BO}(w_i|w_{i-1})}}{\sum_{w\in \mathcal{B}(w_{i-2},w_{i-1})}q_{\mathsf{BO}}(w|w_{i-1})} & \text{if} \ w_i \in \mathcal{B}(w_{i-2},w_{i-1})\\[3ex]
+    \end{cases}
+    $$
+    ​	where 
+    $$
+    \alpha(w_{i-2},w_{i-1}) = 1- \sum_{w\in \mathcal{A}(w_{i-2},w_{i-1})} \frac{\mathsf{Count}^*(w_{i-2},w_{i-1},w_i)}{\mathsf{Count}(w_{i-2},w_{i-1})}
+    $$
 
 
+###  Summary
 
-
+- Three steps in deriving the language model probabilities:
+  - Expand $p(w_1,w_2...w_n)$ using Chain rule.
+  - Make Markov Independence Assumptions.
+  - Smooth the estimates using low order counts.
+- Other methods to improve language models:
+  - "Topic" or "long-range" features.
+  - Syntactic models. 
 
 ### Further reading:
 
