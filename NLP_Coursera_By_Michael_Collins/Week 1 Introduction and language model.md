@@ -191,11 +191,37 @@ $$
 
   ​	where $\lambda _1 + \lambda _2 + \lambda _3 = 1$ , and $\lambda _i \ge 0 $ for all $i$ .
 
-  - Estimate the value of $\lambda$
+  - Estimate the value of $\lambda$  
 
     - Hold out part of training data set as validation data
     - Define $c^\prime (w_1,w_2,w_3)$ to be the number of times the trigram $(w_1,w_2,w_3)$ is seen in validation set
     - Choose  to maximize:
+
+    $$
+    L(\lambda _1 +\lambda _2+\lambda _3)=\sum_{w_1,w_2,w_3}c^{\prime}(w_1,w_2,w_3)\log q(w_3|w_1,w_2)
+    $$
+
+    ​	such that $\lambda _1 +\lambda _2+\lambda _3 =1$ , and $\lambda _i\ge0$ for all $i$ .
+
+    - Allowing the $\lambda$ 's to vary, define a function $\Pi$ that partitions histories
+
+    $$
+    \Pi(w_{i-2},w_{i-1}) = 
+    \begin{cases}
+    1, & \text{if Count($w_{i-1},w_{i-2}$)}=0 \\
+    2, & \text{if $1\le$ Count($w_{i-1},w_{i-2}$)} \le 2 \\
+    3, & \text{if $3 \le$Count($w_{i-1},w_{i-2}$)} \le 5\\
+    4, & \text{Otherwise}
+    \end{cases}
+    $$
+
+    ​	Introducing a dependence of the $\lambda$ 's on the partition: 
+    $$
+    q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\
+    \qquad \qquad \qquad + \lambda _2^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\
+    \qquad \qquad + \lambda _3^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i)
+    $$
+    where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 $ for all $i$ .
 
 - discounting methods
 
