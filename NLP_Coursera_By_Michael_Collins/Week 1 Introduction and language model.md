@@ -2,36 +2,36 @@
 
 ## 一、Introduction to NLP
 
-### what is NLP?
+### What is NLP?
 
-- computers using natural language as input (understanding) and/or output (generation) 
-- key applications: machine translation, information extraction, text summarzation, dialogue systems
+- Computers using natural language as input (understanding) and/or output (generation) 
+- Key applications: machine translation, information extraction, text summarzation, dialogue systems
 
-### basic NLP problems
+### Basic NLP problems
 
-- tagging (part-of-speech tagging, named entity recognition)
-- parsing
+- Tagging (part-of-speech tagging, named entity recognition)
+- Parsing
 
-### why is NLP hard?
+### Why is NLP hard?
 
 - Ambiguity (acoustic level 声学 、 semantic level语义、syntactic level句法、discourse level 语境) 
 
-### what will this course be about?
+### What will this course be about?
 
 - NLP sub-problems: part-speech tagging, parsing, word-sense disambiguation, etc.
-- machine learning techniques: probabilistic context-free grammars, hidden markov models, estimation / smoothing techniques, the EM algorithm, log-liner models, etc.
+- Machine learning techniques: probabilistic context-free grammars, hidden markov models, estimation / smoothing techniques, the EM algorithm, log-liner models, etc.
 - Applications: information extraction, machine translation, natural language interfaces.
 
-### a syllabus教学大纲
+### A syllabus教学大纲
 
-- language modeling, smoothed estimation
+- Language modeling, smoothed estimation
 - Tagging, hidden Markov models
 - Statistical parsing
-- machine learning
+- Machine translations
 - Log-linear model, discriminative methods
 - Semi-supervised and unsuprtvised learning for NLP
 
-### books
+### Books
 
 - Comprehensive  notes for course: http://www.cs.columbia.edu/~mcollins
 - Jurafsky and Martin: Speech and Language Processing (2nd edition)
@@ -42,13 +42,13 @@
 
 ### The language modeling problem
 
-- __traing set__
+- __Traing set__
 
   $\mathcal{V}$  : finite set of vocabulary
 
   $\mathcal{V}^{\dagger}$ : an infinite set of strings (quite large, may have hundreds of billions of words nowdays)
 
-- **task**
+- **Task**
 
   to learn a probability distribution $p$ that satisfies 
 
