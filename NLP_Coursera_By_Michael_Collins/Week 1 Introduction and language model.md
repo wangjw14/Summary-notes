@@ -183,14 +183,9 @@ $$
   - Then,
   
   $$
-  q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1 \times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\
-\qquad \qquad \qquad + \lambda _2 \times q_{\mathsf{ML}}(w_i|w_{i-1}) 
-\qquad \qquad + \lambda _3 \times q_{\mathsf{ML}}(w_i)
+  q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1 \times 
   $$
   
-  $$
-  q(w_i|w_{i-2},w_{i-1}) = \lambda _1 \times q_{ML}
-  $$
 
   ​	where $\lambda _1 + \lambda _2 + \lambda _3 = 1$ , and $\lambda _i \ge 0 $ for all $i$ .
 
