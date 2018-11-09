@@ -182,7 +182,9 @@ $$
 
   - Then,
   $$
-  q_{\mathsf{ML}}(w_i|w_{i-1}) = \frac{\mathsf{Count}(w_{i-1},w_i)}{\mathsf{Count}(w_{i-1})}
+  q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1 \times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\
+\qquad \qquad \qquad + \lambda _2 \times q_{\mathsf{ML}}(w_i|w_{i-1}) 
+\qquad \qquad + \lambda _3 \times q_{\mathsf{ML}}(w_i)
   $$
   
   $$
