@@ -183,7 +183,7 @@ $$
   - Then,
   
   $$
-  q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1 \times + \lambda _2 \times + \lambda _3 \times
+  q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1 \times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1}) + \lambda _2 \times + \lambda _3 \times
   $$
   
 
