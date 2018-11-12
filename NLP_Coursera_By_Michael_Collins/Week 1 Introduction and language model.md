@@ -189,6 +189,7 @@ $$
   $$
 
 
+
   ​	where $\lambda _1 + \lambda _2 + \lambda _3 = 1$ , and $\lambda _i \ge 0 $ for all $i$ .
 
   - Estimate the value of $\lambda$  
@@ -283,6 +284,7 @@ $$
     $$
     \alpha(w_{i-2},w_{i-1}) = 1- \sum_{w\in \mathcal{A}(w_{i-2},w_{i-1})} \frac{\mathsf{Count}^*(w_{i-2},w_{i-1},w_i)}{\mathsf{Count}(w_{i-2},w_{i-1})}
     $$
+
 
 
 ###  Summary
