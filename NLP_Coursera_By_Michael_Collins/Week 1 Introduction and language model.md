@@ -102,6 +102,7 @@ $$
   \end{aligned}
   \end{equation}
   $$
+  
 
 - Second-Order Markov process
   $$
@@ -114,7 +115,9 @@ $$
   \end{aligned}
   \end{equation}
   $$
-  Assume $x_0=x_{-1}=* $ , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
+  
+
+  Assume $undefined​$ , where $*​$ is a special "start" symbol.  And define $X_n=​$STOP where STOP is a special symbol. 
 
 ### Trigram models
 
@@ -123,7 +126,7 @@ $$
   - A finite set $\mathcal{V}$
   - A parameter $q(w|u,v)$ for each trigram $u,v,w$ such that $w \in \mathcal{V} \cup \{\mathsf{STOP}\}$ , and $u,v\in \mathcal{V}\cup\{*\}$ 
 
-- For any sentence $x_1\cdots x_n$ where $x_i \in \mathcal{V}$  for $i=1\cdots (n-1)$ , and $x_n=\mathsf{STOP}$ , the probability of the sentence under the trigram language model is 
+- For any sentence $x_1\cdots x_n​$ where $x_i \in \mathcal{V}​$  for $i=1\cdots (n-1)​$ , and $x_n=\mathsf{STOP}​$ , the probability of the sentence under the trigram language model is 
   $$
   p(x_1\cdots x_n)=\prod_{i=1}^n q(x_i|x_{i-2},x_{i-1})
   $$
@@ -199,12 +202,12 @@ $$
     - Choose  to maximize:
 
     $$
-    L(\lambda _1 +\lambda _2+\lambda _3)=\sum_{w_1,w_2,w_3}c^{\prime}(w_1,w_2,w_3)\log q(w_3|w_1,w_2)
+    L(\lambda _1 ,\lambda _2,\lambda _3)=\sum_{w_1,w_2,w_3}c^{\prime}(w_1,w_2,w_3)\log q(w_3|w_1,w_2)
     $$
 
     ​	such that $\lambda _1 +\lambda _2+\lambda _3 =1$ , and $\lambda _i\ge0$ for all $i$ .
 
-    - Allowing the $\lambda$ 's to vary, define a function $\Pi$ that partitions histories
+    - Allowing the $\lambda​$ 's to vary, define a function $\Pi​$ that partitions histories
 
     $$
     \Pi(w_{i-2},w_{i-1}) = 
@@ -216,13 +219,15 @@ $$
     \end{cases}
     $$
 
+    ​	
+
     ​	Introducing a dependence of the $\lambda$ 's on the partition: 
     $$
     q(w_i|w_{i-2},w_{i-1}) = \quad \lambda _1^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i|w_{i-2},w_{i-1})\\
     \qquad \qquad \qquad + \lambda _2^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\
     \qquad \qquad + \lambda _3^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i)
     $$
-    ​	where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 $ for all $i$ .
+    ​	where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1​$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 ​$ for all $i​$ .
 
 - Discounting methods
 
