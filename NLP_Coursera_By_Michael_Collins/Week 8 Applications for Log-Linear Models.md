@@ -5,7 +5,7 @@
 - Log-linear models for tagging
   - we have a input sentence $w_{[1;n]}=w_1,w_2,...,w_n$ ($w_1$ is the $i^\prime$ th word in the sentence)
 
-  - we have a tag sequence $t_{[1:m]}=t_1,t_2,...,t_n$ ($t_i$ is the $i^\prime$ th tag in the sentence)
+  - we have a tag sequence $t_{[1:n]}=t_1,t_2,...,t_n$ ($t_i$ is the $i^\prime$ th tag in the sentence)
 
   - we use an log-linear model to define
     $$
@@ -143,5 +143,73 @@
 
 ## Log-Linear Models for Parsing
 
+- A General Approach: (Conditional) History-Based Models
+  - Step1: represent a tree as a sequence of **decisions** $d_1...d_m$
 
+  $$
+  T=\langle d_1,d_2,...,d_m \rangle
+  $$
 
+  ​		$m$ is **not** necessarily the length of the sentence
+
+  - Step2: the probability of a tree is:
+
+  $$
+  p(T|S) = \prod_{i=1}^m p(d_i|d1...d_{i-1},S)
+  $$
+  - Step3: use a log-linear model to estimate $p(d_i|d_1...d_{i-1},S)$
+    $$
+    p(d_i|d_1...d_{i-1},S) = \frac{e^{f(\lang d_1...d_{i-1},S \rang,d_i)\cdot v}}{\sum_{d\in\mathcal A} e^{f(\lang d_1...d_{i-1},S \rang,d)\cdot v}}
+    $$
+    where:
+
+    $\lang d_1...d_{i-1},S \rang$ is history, $d_i$ is the outcome, $f$ maps a history/outcome pair to a feature vector, $v$ is a parameter vector, $\mathcal A$ is set of possible actions. 
+
+  - Step4: use beam to search for decisions of parse tree
+
+- Ratnaparkhi's parser: three layers of structure
+
+  - Part-of-speech tags
+
+  - chunks
+
+    - chunks are defined as any phrase where all children are part-of-speech tags
+
+  - remaining structure
+
+    - Alternate between two classes of actions:
+      - **Join(X)** or **Start(X)** , where **X** is a label (NP, S, VP etc.)
+      - **Check=Yes** or **Check=No** 
+
+    - Meaning of these actions:
+      - **Start(X)**: starts a new constituent with label **X** (always acts on leftmost constituent with no start or join label above it)
+      - **Join(X)**: continues a constituent with label **X** (always acts on leftmost constituent with no start or join label above it)
+      - **Check=Yes**: takes previous **Start** or **Join** action, and converts it into a completed constituent
+      - **Check=No**: does nothing
+
+  - An example:
+
+    - Sentence: The lawyer questioned the witness about the revolver.
+
+    - Sequence:
+      $$
+      \begin{align}
+      \langle d_1,d_2,...,d_m \rangle = \langle & \text{ DT, NN,Vt,DT,NN,IN,DT,NN}\\
+      & \text{Start(NP),Join(NP),Other,Start(NP),Join(NP),} \\
+      & \text{Other,Start(NP),Join(NP),} \\
+      & \text{Start(S),Check=No,Start(VP),Check=No,}\\
+      & \text{Join(VP),Check=No,Start(PP),Check=No,}\\
+      & \text{Join(PP),Check=Yes,Join(VP),Check=Yes,}\\
+      & \text{Join(S),Check=Yes } 
+      \rangle
+      \end{align}
+      $$
+      
+
+  - How to define feature $f$
+
+    - Ratnaparkhi's method defines $f$ differently depending on whether next decision is:
+      - A tagging decision
+      - A chunking decision
+      - A start/join decision after chunking
+      - A check=no /check=yes decision
