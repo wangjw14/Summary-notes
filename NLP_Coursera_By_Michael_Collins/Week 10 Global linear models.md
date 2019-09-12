@@ -241,3 +241,13 @@
 
   - Advantages of the dependency parsing approaches: simplicity, efficiency ($O(n^3)$ parsing time)
 
+## Summary
+
+- Global linear model require definitions of GEN, $\mathsf f$
+- Key ideas in tagging and dependency parsing
+  - GEN is set of all possible structures (exponential in size)
+  - $\mathsf f$ is defined through a sum of local feature vectors ($\mathsf f(x,y)=\sum g(...)$)
+  - Dynamic programming is used to find the highest scoring structure
+- We've seen the perceptron algorithm for parameter estimation, but there are other options:
+  - Conditional random fields ("giant" log-linear models, gradient ascend for parameter estimation)
+  - Large-margin methods (related to support vector machines)
