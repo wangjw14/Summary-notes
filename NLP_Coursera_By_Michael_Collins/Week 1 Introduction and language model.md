@@ -5,7 +5,7 @@
 ### What is NLP?
 
 - Computers using natural language as input (understanding) and/or output (generation) 
-- Key applications: machine translation, information extraction, text summarzation, dialogue systems
+- Key applications: machine translation, information extraction, text summarization, dialogue systems
 
 ### Basic NLP problems
 
@@ -29,7 +29,7 @@
 - Statistical parsing
 - Machine translations
 - Log-linear model, discriminative methods
-- Semi-supervised and unsuprtvised learning for NLP
+- Semi-supervised and unsupervised learning for NLP
 
 ### Books
 
@@ -103,7 +103,6 @@ $$
   \end{equation}
   $$
   
-
 - Second-Order Markov process
   $$
   \begin{equation}
@@ -117,7 +116,7 @@ $$
   $$
   
 
-  Assume $undefined​$ , where $*​$ is a special "start" symbol.  And define $X_n=​$STOP where STOP is a special symbol. 
+  Assume $undefined$ , where $*$ is a special "start" symbol.  And define $X_n=$STOP where STOP is a special symbol. 
 
 ### Trigram models
 
@@ -126,7 +125,7 @@ $$
   - A finite set $\mathcal{V}$
   - A parameter $q(w|u,v)$ for each trigram $u,v,w$ such that $w \in \mathcal{V} \cup \{\mathsf{STOP}\}$ , and $u,v\in \mathcal{V}\cup\{*\}$ 
 
-- For any sentence $x_1\cdots x_n​$ where $x_i \in \mathcal{V}​$  for $i=1\cdots (n-1)​$ , and $x_n=\mathsf{STOP}​$ , the probability of the sentence under the trigram language model is 
+- For any sentence $x_1\cdots x_n$ where $x_i \in \mathcal{V}$  for $i=1\cdots (n-1)$ , and $x_n=\mathsf{STOP}$ , the probability of the sentence under the trigram language model is 
   $$
   p(x_1\cdots x_n)=\prod_{i=1}^n q(x_i|x_{i-2},x_{i-1})
   $$
@@ -207,7 +206,7 @@ $$
 
     ​	such that $\lambda _1 +\lambda _2+\lambda _3 =1$ , and $\lambda _i\ge0$ for all $i$ .
 
-    - Allowing the $\lambda​$ 's to vary, define a function $\Pi​$ that partitions histories
+    - Allowing the $\lambda$ 's to vary, define a function $\Pi$ that partitions histories
 
     $$
     \Pi(w_{i-2},w_{i-1}) = 
@@ -227,7 +226,7 @@ $$
     \qquad \qquad \qquad + \lambda _2^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i|w_{i-1}) \\
     \qquad \qquad + \lambda _3^{\Pi(w_{i-2},w_{i-1})} \times q_{\mathsf{ML}}(w_i)
     $$
-    ​	where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1​$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 ​$ for all $i​$ .
+    ​	where $\lambda _1^{\Pi(w_{i-2},w_{i-1})} + \lambda _2^{\Pi(w_{i-2},w_{i-1})} + \lambda _3^{\Pi(w_{i-2},w_{i-1})} = 1$  , and $\lambda _i ^{\Pi(w_{i-2},w_{i-1})}\ge 0 $ for all $i$ .
 
 - Discounting methods
 
