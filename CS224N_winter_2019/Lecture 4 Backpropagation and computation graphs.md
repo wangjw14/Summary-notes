@@ -108,29 +108,85 @@
 
 ##### a. Regularization to prevent overfitting
 
+- A full loss function in practice includes regularization over all parameters $\theta$, e.g., L2 regularization
+  $$
+  J(\theta) = \frac1N\sum_{i=1}^N-\log\left( \frac{e^{f_{y_i}}}{\sum_{c=1}^Ce^{f_c}} \right) + \lambda \sum_k\theta_k^2
+  $$
 
+- Regularization prevents overfitting
 
 ##### b. Vectorization
 
-
+- Always try to use vectors and matrices rather than for loops
 
 ##### c. Nonlinearities
 
+- sigmoid
+  $$
+  f(z)=\frac 1{1+\exp(-z)}
+  $$
 
+- tanh
+  $$
+  f(z)=\tanh(z)=\frac{e^z-e^{-z}}{e^z+e^{-z}}=2\times\text{sigmoid}(2z)-1
+  $$
+
+- hard tanh
+  $$
+  \text{HardTanh}(x)=\begin{cases}
+  -1 &\text{if} \ x<-1 \\
+  x &\text{if} \ -1\le x\le1 \\
+  1 &\text{if}\ x>1
+  \end{cases}
+  $$
+
+- ReLU
+  $$
+  \text{ReLU}(z)=\max(z,0)
+  $$
+
+- Leaky ReLU
+  $$
+  \text{Leaky ReLU}(z)=\max(z,0.01z)
+  $$
+
+- Parameteric ReLU
+  $$
+  \text{Parametric ReLU}(z)=\max(z,az)
+  $$
+
+- For building a feed-forward deep network,  the first thing you should try is ReLU, it trains quickly and performs well due to good gradient backflow 
 
 ##### d. Initialization
 
+- Initialize weights to small random values to avoid symmetries that prevent learning
 
+- Initialize hidden layer biases to 0 and output biases to optimal value if weights were 0
+
+- Initialize **all other weights** ~ Uniform ( -r, r), with r chosen so numbers get neither too big or too small
+
+- Xavier initialization (recommended) has variane inversely proportional to fan-in $n_{in}$ (previous layer size) and fan-out $n_{out}$ (next layer size):
+  $$
+  \text{Var}(W_i)=\frac2{n_{in}+n_{out}}
+  $$
 
 ##### e.Optimizers
 
-
+- Plain SGD work just fine, however, getting good results will often require hand-tuning the learning rate
+- For more complex nets and situations, you often do better with one of a family of more sophisticated "adaptive" optimizers that scale the parameter adjustment by an accumulated gradient.
+- These models give per-parameter learning rates
+  - Adagrad
+  - RMSprop
+  - Adam (fairly good, safe place to begin in many cases)
+  - SparseAdam
 
 ##### f.Learning rates
 
-
-
-
-
-
-
+- You can just use a constant learning rate, start around $lr=0.001$
+  - It must be order of magnitude right - try power of 10
+  - Model will diverge if the learning rate is too big, or you may not have trained your model by deadline if the learning rate is too small
+- Better results can be obtained by allowing learning rates to decrease as you train
+  - By hand: halve the learning rate every k epochs
+  - By a formula: $lr=lr_0e^{-kt}$ for epoch t
+  - There are fancier mothods like cyclic learning rates 
+- Fancier optimizers still use a learning rate but it may be an initial rate that the optimizer shrinks - so may be able to start high.
