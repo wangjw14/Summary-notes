@@ -36,7 +36,8 @@ git log                           # 查看提交历史
 git log --pretty=oneline          # 查看提交历史，一行显示
 git reflog                        # 查看所有提交，可以重新回到未来
 git reset --hard HEAD^
-git reset --hard commit_id
+git reset --hard commit_id        # 回到commit_id的版本
+git push origin HEAD --force      # 强制提交现有版本到远端服务器
 ```
 
 #### 工作区和暂存区
