@@ -1,4 +1,4 @@
 .DS_Store
-*datasets/
+CS224N_winter_2019/assignment_2/utils/datasets
 *__pycache__/
-*data/
+CS224N_winter_2019/assignment_3/data
