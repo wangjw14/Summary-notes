@@ -2,3 +2,5 @@
 CS224N_winter_2019/assignment_2/utils/datasets
 *__pycache__/
 CS224N_winter_2019/assignment_3/data
+*.npy
+*.pickle
