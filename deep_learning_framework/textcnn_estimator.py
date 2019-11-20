@@ -6,18 +6,18 @@ from collections import Counter,OrderedDict
 from itertools import chain
 
 shuffle_buffer_size=1000
-save_checkpoints_steps=1000
+save_checkpoints_steps=500
 model_dir='./output'
 
 params = {
-        "embedding_size": 200,
-        "max_seq_len": 100,
+        "embedding_size": 64,
+        "max_seq_len": 600,
         "filter_num": 100,
-        "filter_sizes": [2, 3, 4],
-        "batch_size": 1024,
-        "drop_prob": 0.25,
-        "class_num": 14,
-        "epoch": 3,
+        "filter_sizes": [ 5, 5, 5],
+        "batch_size": 128,
+        "drop_prob": 0.5,
+        "class_num": 171,
+        "epoch": 20,
         "lr": 0.001,
         "pad_word": '<PAD>',
         "unk_word": '<UNK>'
@@ -29,20 +29,17 @@ class DataProcessor():
         self.path_train = path_train
         self.params = params
 
+        path_labels = '../data/labels.json'
+        self.labels, self.labels_dict, self.labels_rev_dict = self.load_labels(path_labels)
+        self.params['class_num'] = len(self.labels)
+
         if not os.path.exists(self.path_vocab):
             self.build_vocab()
         self.vocab = self.load_vocab()
         self.params['vocab_size'] = len(self.vocab)
 
-
     def convert_text_to_tokens(self,text):
-        text = re.sub(r"[^A-Za-z0-9\'\`]", " ", text)
-        text = re.sub(r"\s{2,}", " ", text)
-        text = re.sub(r"\`", "\'", text)
-        text = text.strip().lower()
-
-        tokens = text.split(' ')
-        tokens = [t.strip("'") for t in tokens if len(t.strip("'")) > 0]
+        tokens = list(text)
         return tokens
 
     def post_process_of_tokenization(self,tokens):
@@ -69,8 +66,8 @@ class DataProcessor():
         return feature
 
     def parse_single_line(self,line):
-        label = int(line[0]) - 1
-        text = line[2]
+        label = self.labels_dict[line[0]]
+        text = line[1]
         tokens = self.convert_text_to_tokens(text)
         tokens = self.post_process_of_tokenization(tokens)
         feature = self.convert_tokens_to_ids(tokens)
@@ -83,7 +80,7 @@ class DataProcessor():
         def create_int_feature(values):
             return tf.train.Feature(int64_list=tf.train.Int64List(value=list(values)))
 
-        df = pd.read_csv(path_csv, header=None)
+        df = pd.read_csv(path_csv, header=None,sep='\t')
         df = df.sample(frac=1)
         examples = df.values
         for ex_index, example in enumerate(examples):
@@ -102,9 +99,9 @@ class DataProcessor():
     def build_vocab(self):
         print('Building vocabulary...')
 
-        df = pd.read_csv(self.path_train,header=None)
-        df[2] = df[2].apply(lambda x: self.convert_text_to_tokens(x))
-        all_words = list(chain(* (list(df[2].values))))
+        df = pd.read_csv(self.path_train,header=None,sep='\t')
+        df[1] = df[1].apply(lambda x: self.convert_text_to_tokens(x))
+        all_words = list(chain(* (list(df[1].values))))
 
         counter = Counter(all_words)
         # count_pairs = counter.most_common(params['vocab_size'] - 1)
@@ -130,9 +127,11 @@ class DataProcessor():
         with open(path_labels) as f:
             labels = json.load(f)
         labels_dict = {}
+        labels_rev_dict = {}
         for k,v in enumerate(labels):
-            labels_dict[k] = v
-        return labels, labels_dict
+            labels_dict[v] = k
+            labels_rev_dict[k] = v
+        return labels, labels_dict, labels_rev_dict
 
 
 def create_model(features,vocab_size,embedding_size,filter_sizes,
@@ -167,8 +166,8 @@ def create_model(features,vocab_size,embedding_size,filter_sizes,
     # shape [batch, filter_num*len(filter_sizes) ]
     pooled_flat = tf.reshape(pooled, [-1, filter_num * len(filter_sizes)])
 
-    if is_training and drop_prob > 0.0:
-        pooled_flat = tf.layers.dropout(pooled_flat, drop_prob)
+    # if is_training and drop_prob > 0.0:
+    #     pooled_flat = tf.layers.dropout(pooled_flat, drop_prob)
 
     logits = tf.layers.dense(pooled_flat, class_num, activation=None)
     return logits
@@ -189,21 +188,24 @@ def model_fn_builder(learning_rate):
         is_evaluate = mode == tf.estimator.ModeKeys.EVAL
         is_predict = mode == tf.estimator.ModeKeys.PREDICT
 
+        # tf.logging.info("*** Features ***")
+        # for name in sorted(features.keys()):
+        #     tf.logging.info("  name = %s, shape = %s" % (name, features[name].shape))
+
         if not is_predict:
-            # labels = tf.reshape(labels, [-1, 1])
             tf.logging.info('labels shape:' + str(labels.shape))
 
         logits = create_model(features,params['vocab_size'],params['embedding_size'],
                               params['filter_sizes'],params['filter_num'],params['drop_prob'],
                               params['max_seq_len'],is_training,params['class_num'])
 
-        tf.logging.info('logits shape:' + str(logits.shape))
+        # tf.logging.info('logits shape:' + str(logits.shape))
 
         y_pred = tf.nn.softmax(logits)
-        tf.logging.info('y_pred shape:'+ str(y_pred.shape))
+        # tf.logging.info('y_pred shape:'+ str(y_pred.shape))
 
         y_pred_cls = tf.argmax(y_pred,axis=1)
-        tf.logging.info('y_pred_cls shape:' + str(y_pred_cls.shape))
+        # tf.logging.info('y_pred_cls shape:' + str(y_pred_cls.shape))
 
         if not is_predict:
             cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=labels,
@@ -228,7 +230,8 @@ def model_fn_builder(learning_rate):
             return tf.estimator.EstimatorSpec(mode=mode,loss=loss,train_op=train_op,
                                               eval_metric_ops=metric_fn(labels,y_pred_cls))
         else:
-            return tf.estimator.EstimatorSpec(mode=mode, predictions=y_pred_cls)
+            pred = {"pred":y_pred_cls,"prob":y_pred}
+            return tf.estimator.EstimatorSpec(mode=mode, predictions=pred)
 
     return model_fn
 
@@ -259,11 +262,12 @@ def input_fn(path_tfr, is_training):
     dataset = dataset.apply(tf.contrib.data.map_and_batch(
         lambda record: decode_record(record, name_to_features),
         batch_size= params['batch_size']))
-    iterator = dataset.make_one_shot_iterator()
-    one_ele = iterator.get_next()
-    features, labels = {"input_ids":one_ele['input_ids']}, one_ele['label_ids']
+    dataset = dataset.map(lambda x: ({"input_ids":x['input_ids']},x['label_ids']))
+    # iterator = dataset.make_one_shot_iterator()
+    # one_ele = iterator.get_next()
+    # features, labels = {"input_ids":one_ele['input_ids']}, one_ele['label_ids']
 
-    return  features,labels
+    return  dataset
 
 def serving_input_receiver_fn():
 
@@ -280,49 +284,61 @@ if __name__ == "__main__":
     os.environ['CUDA_VISIBLE_DEVICES'] = '7'
     tf.logging.set_verbosity(tf.logging.INFO)
 
-
-
-    path_train = './data/dbpedia_csv/train.csv'
-    path_train_tfr = './data/dbpedia_csv/train.tfrecord'
-    path_test = './data/dbpedia_csv/test.csv'
-    path_test_tfr = './data/dbpedia_csv/test.tfrecord'
-    path_vocab = './data/dbpedia_csv/vocab.txt'
+    path_train = '../data/train.tsv'
+    path_train_tfr = '../data/textcnn_estimator_train.tfrecord'
+    path_dev = '../data/dev.tsv'
+    path_dev_tfr = '../data/textcnn_estimator_dev.tfrecord'
+    path_vocab = '../data//textcnn_estimator_vocab.txt'
 
     processor = DataProcessor(path_vocab,path_train,params)
 
 
     if not os.path.exists(path_train_tfr):
         processor.build_tfrecord_file(path_train,path_train_tfr)
-    if not os.path.exists(path_test_tfr):
-        processor.build_tfrecord_file(path_test,path_test_tfr)
+    if not os.path.exists(path_dev_tfr):
+        processor.build_tfrecord_file(path_dev,path_dev_tfr)
+
+    mirrored_strategy = tf.distribute.MirroredStrategy()
 
     classifier = tf.estimator.Estimator(
         model_fn=model_fn_builder(params['lr']),
         params=params,
         config=tf.estimator.RunConfig(model_dir=model_dir,
-                                       save_checkpoints_steps=save_checkpoints_steps)
-    )
+                                       save_checkpoints_steps=save_checkpoints_steps,
+                                      train_distribute=mirrored_strategy,
+                                      eval_distribute=mirrored_strategy))
 
     input_fn_train = lambda : input_fn(path_train_tfr,True)
-    input_fn_test = lambda : input_fn(path_test_tfr,False)
+    input_fn_test = lambda : input_fn(path_dev_tfr,False)
 
+    early_stopping = tf.contrib.estimator.stop_if_no_decrease_hook(
+        classifier,metric_name='loss',max_steps_without_decrease=1000,min_steps=100
+    )
 
     print('start train and eval...')
-    df_test = pd.read_csv(path_test,header=None)
+    df_test = pd.read_csv(path_dev,header=None,sep='\t')
     eval_step = int(len(df_test) / params['batch_size'])
-    classifier.train(input_fn=input_fn_train)
-    r = classifier.evaluate(input_fn=input_fn_test,steps=eval_step)
-    print(r)
+
+    train_spec = tf.estimator.TrainSpec(input_fn=input_fn_train,hooks=[early_stopping])
+    eval_spec = tf.estimator.EvalSpec(input_fn=input_fn_test,throttle_secs=1)
+
+    tf.estimator.train_and_evaluate(classifier,train_spec,eval_spec)
+
+    #
+    # classifier.train(input_fn=input_fn_train)
+    # r = classifier.evaluate(input_fn=input_fn_test,steps=eval_step)
+    # print(r)
     classifier.export_savedmodel('export_model',serving_input_receiver_fn =serving_input_receiver_fn)
 
-    # f,l = input_fn(path_train_tfr,True)
-    #
-    #
+    # d = input_fn(path_train_tfr,True)
+    # #
+    # i = d.make_one_shot_iterator()
+    # e = i.get_next()
     # with tf.Session() as sess:
     #     for i in range(3):
-    #         fe,la = sess.run([f,l])
-    #         print("feature",fe)
-    #         print("label",la)
+    #         r = sess.run(e)
+    #         print(r)
+
 
 
     # df_train = pd.read_csv(path_train,header=None,nrows=2)
