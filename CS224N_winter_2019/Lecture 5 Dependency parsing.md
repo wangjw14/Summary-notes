@@ -19,7 +19,7 @@
 
 ### Dependency Grammar and Treebanks
 
-- Dependency syntax postulates that syntactic structure consists of relations between lexical items, normally binary asymmetric relations ("arrows") called **dependencies** 
+- Dependency syntax postulates(假定) that syntactic structure consists of relations between lexical items, normally binary asymmetric relations ("arrows") called **dependencies** 
   - The arrows are commonly typed with the name of grammatical  relations (subject, prepositional object, apposition, etc.) (Not used in this class)
   - The arrow connects a **head** (governor, superior, regent) with a **dependent** (modifier, inferior, subordinate)
   - Usually, dependencies form a tree (connected, acyclic, single-head )
@@ -41,7 +41,7 @@
   - But a treebank gives us many things
     - Reusability of the labor
       - Many parsers, part-of-speech taggers, etc. can be built on it
-      - Valuable resource for linguistics
+      - Also valuable resources for linguistics
     - Broad coverage, not just a few intuitions
     - Frequencies and distributional information
     - A way to evaluate systems
