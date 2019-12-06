@@ -40,7 +40,8 @@ class Config(object):
 
 
 class Parser(object):
-    """Contains everything needed for transition-based dependency parsing except for the model"""
+    """Contains everything needed for transition-based dependency parsing
+     except for the model"""
 
     def __init__(self, dataset):
         root_labels = list([l for ex in dataset
@@ -91,10 +92,12 @@ class Parser(object):
         self.tok2id = tok2id
         self.id2tok = {v: k for (k, v) in tok2id.items()}
 
-        self.n_features = 18 + (18 if config.use_pos else 0) + (12 if config.use_dep else 0)
+        self.n_features = 18 + (18 if config.use_pos else 0) + \
+        (12 if config.use_dep else 0)
         self.n_tokens = len(tok2id)
 
     def vectorize(self, examples):
+        # 将examples中的word、POS、label转化为id
         vec_examples = []
         for ex in examples:
             word = [self.ROOT] + [self.tok2id[w] if w in self.tok2id
@@ -274,7 +277,7 @@ class ModelWrapper(object):
 
     def predict(self, partial_parses):
         mb_x = [self.parser.extract_features(p.stack, p.buffer, p.dependencies,
-                                             self.dataset[self.sentence_id_to_idx[id(p.sentence)]])
+                     self.dataset[self.sentence_id_to_idx[id(p.sentence)]])
                 for p in partial_parses]
         mb_x = np.array(mb_x).astype('int32')
         mb_x = torch.from_numpy(mb_x).long()
@@ -300,7 +303,8 @@ def read_conll(in_file, lowercase=False, max_example=None):
                     head.append(int(sp[6]))
                     label.append(sp[7])
             elif len(word) > 0:
-                examples.append({'word': word, 'pos': pos, 'head': head, 'label': label})
+                examples.append({'word': word, 'pos': pos, \
+                    'head': head, 'label': label})
                 word, pos, head, label = [], [], [], []
                 if (max_example is not None) and (len(examples) == max_example):
                     break

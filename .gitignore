@@ -4,3 +4,6 @@ CS224N_winter_2019/assignment_2/utils/datasets
 CS224N_winter_2019/assignment_3/data
 *.npy
 *.pickle
+*.ipynb_checkpoints/
+*results/
+*.ipynb
