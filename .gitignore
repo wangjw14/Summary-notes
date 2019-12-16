@@ -1,9 +1,13 @@
 .DS_Store
-CS224N_winter_2019/assignment_2/utils/datasets
 *__pycache__/
+CS224N_winter_2019/assignment_2/utils/datasets
 CS224N_winter_2019/assignment_3/data
+CS224N_winter_2019/assignment_4/a4/en_es_data
+CS224N_winter_2019/assignment_5/a5_public/en_es_data
+CS224N_winter_2019/final_project/squad-master/data
 *.npy
 *.pickle
 *.ipynb_checkpoints/
 *results/
 *.ipynb
+*.zip
