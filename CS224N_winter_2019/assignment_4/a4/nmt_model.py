@@ -256,6 +256,7 @@ class NMT(nn.Module):
             Ybar_t = torch.cat((Y_t,o_prev),1)
             dec_state, combined_output, e_t = self.step(Ybar_t,dec_state,enc_hiddens,enc_hiddens_proj,enc_masks)
             combined_outputs.append(combined_output)
+            o_prev = combined_output
         combined_outputs = torch.stack(combined_outputs)
 
 
