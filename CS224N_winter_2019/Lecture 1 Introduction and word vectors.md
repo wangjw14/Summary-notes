@@ -123,7 +123,6 @@ $$
   \theta^{new}=\theta^{old}-\alpha\nabla_{\theta} J(\theta)
   $$
   
-
 - Stochastic gradient descent
 
   - Repeatedly sample windows, and update after each other
