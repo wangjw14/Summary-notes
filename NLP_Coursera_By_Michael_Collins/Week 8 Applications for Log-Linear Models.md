@@ -3,7 +3,7 @@
 ## Log-Linear Models for Tagging （Maximum-entropy Markov Models (MEMMs)）
 
 - Log-linear models for tagging
-  - we have a input sentence $w_{[1;n]}=w_1,w_2,...,w_n$ ($w_1$ is the $i^\prime$ th word in the sentence)
+  - we have a input sentence $w_{[1;n]}=w_1,w_2,...,w_n$ ($w_i$ is the $i^\prime$ th word in the sentence)
 
   - we have a tag sequence $t_{[1:n]}=t_1,t_2,...,t_n$ ($t_i$ is the $i^\prime$ th tag in the sentence)
 
