@@ -2,10 +2,7 @@
 
 - 
 
-
-
-
-## Plan of next week
+# Plan of next week
 
 - 
 
