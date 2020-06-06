@@ -70,6 +70,15 @@ return
 
 
 
+### Numpy one-hot embedding
+
+```python
+def one_hot(t, class_num):
+    I = np.eye(class_num).astype(np.long)
+    res = I[t]   
+    return res
+```
+
 
 
 

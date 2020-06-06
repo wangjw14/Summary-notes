@@ -41,3 +41,18 @@ plt.stem(date_vc.index,date_vc.values, markerfmt='D')
 
 ![date_count_plot](./pics/date_count_plot.png)
 
+### 画出数据的分布
+
+```python
+def plot_text_len(word_counts):
+    max_seq_len = np.round(np.mean(word_counts) + np.std(word_counts)).astype(int)
+    sns.distplot(word_counts, hist=True, kde=True, color='b', label='doc len')
+    plt.axvline(x=max_seq_len, color='k', linestyle='--', label='mean+std len')
+    plt.text(max_seq_len+10,0.020,str(max_seq_len))
+    plt.title('text length')
+    plt.legend()
+    plt.show()
+```
+
+<img src="pics/text_len.png" alt="text_len" style="zoom:150%;" />
+
