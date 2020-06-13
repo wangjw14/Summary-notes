@@ -44,6 +44,9 @@ plt.stem(date_vc.index,date_vc.values, markerfmt='D')
 ### 画出数据的分布
 
 ```python
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 def plot_text_len(word_counts):
     max_seq_len = np.round(np.mean(word_counts) + np.std(word_counts)).astype(int)
     sns.distplot(word_counts, hist=True, kde=True, color='b', label='doc len')
