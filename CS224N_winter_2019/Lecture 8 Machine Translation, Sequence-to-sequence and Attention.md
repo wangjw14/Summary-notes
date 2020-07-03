@@ -51,9 +51,9 @@
 
 - Seq2seq model is an example of a **Conditional Language Model** 
 
-  - Language Model because the decoder is predicting the next word of the target sentence y
+  - Language Model because the decoder is predicting the next word of the target sentence $y$ 
 
-  - Conditional because its predictions are also conditioned on the source sentence x
+  - Conditional because its predictions are also conditioned on the source sentence $x$ 
     $$
     P(y|x) = P(y_1|x)P(y_2|y_1,x)P(y_3|y_1,y_2,x)...P(y_T|y_1,...,y_{T-1},x)
     $$
@@ -172,19 +172,19 @@
 
   - There are several ways to compute $\boldsymbol e\in\mathbb R^N$ from $\boldsymbol h_1,...,\boldsymbol h_N \in\mathbb R^{d_1}$  and $\boldsymbol s\in \mathbb R^{d_2}$ 
 
-  - Basic dot-product attention: 
+  - Basic **dot-product attention**: 
     $$
     \boldsymbol e_i=\boldsymbol s^T\boldsymbol h_i \in \mathbb R
     $$
     assume $d_1=d_2$
 
-  - Multiplicative attention:
+  - **Multiplicative attention**:
     $$
     \boldsymbol e_i=\boldsymbol s^T\boldsymbol W\boldsymbol h_i \in \mathbb R
     $$
     where $\boldsymbol W\in \mathbb R^{d_2\times d_1}$ is a weight matrix
 
-  - Additive attention:
+  - **Additive attention**:
     $$
     \boldsymbol e_i=\boldsymbol v^T\tanh(\boldsymbol W_1\boldsymbol h_i+\boldsymbol W_2 \boldsymbol s) \in \mathbb R
     $$
