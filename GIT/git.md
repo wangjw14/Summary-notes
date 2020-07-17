@@ -133,7 +133,24 @@ git config --global alias.unstage 'reset HAED'  # 当前用户的git配置文件
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
 
+### git技巧
 
+- git clone加速
+
+    ```sh
+    # socks5协议，1080端口修改成自己的本地代理端口（使用shadowsocks时，使用下面的命令）
+    git config --global http.https://github.com.proxy socks5://127.0.0.1:1086
+    git config --global https.https://github.com.proxy socks5://127.0.0.1:1086
+    
+    # http协议，1081端口修改成自己的本地代理端口
+    git config --global http.https://github.com.proxy https://127.0.0.1:1081
+    git config --global https.https://github.com.proxy https://127.0.0.1:1081
+    
+    # 使用https的网址，进行git clone。
+    git clone https://github.com/wangjw14/Summary-notes.git
+    ```
+
+    
 
 
 
