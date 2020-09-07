@@ -9,6 +9,16 @@
 
 
 
+### 在mac上挂在ntfs格式的磁盘
+
+```shell
+sudo umount /Volumes/UNTITLED
+sudo mount -t ntfs -o rw,auto,nobrowse /dev/disk3s1 ~/ntfs-volume
+sudo umount ~/ntfs-volume
+```
+
+
+
 #### 压缩相关命令
 
 - tar
