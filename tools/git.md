@@ -139,12 +139,12 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 
     ```sh
     # socks5协议，1080端口修改成自己的本地代理端口（使用shadowsocks时，使用下面的命令）
-    git config --global http.https://github.com.proxy socks5://127.0.0.1:1086
-    git config --global https.https://github.com.proxy socks5://127.0.0.1:1086
+    git config --global http.https://github.com.proxy socks5://127.0.0.1:7891
+    git config --global https.https://github.com.proxy socks5://127.0.0.1:7891
     
     # http协议，1081端口修改成自己的本地代理端口
-    git config --global http.https://github.com.proxy https://127.0.0.1:1081
-    git config --global https.https://github.com.proxy https://127.0.0.1:1081
+    git config --global http.https://github.com.proxy https://127.0.0.1:7890
+    git config --global https.https://github.com.proxy https://127.0.0.1:7890
     
     # 使用https的网址，进行git clone。
     git clone https://github.com/wangjw14/Summary-notes.git
