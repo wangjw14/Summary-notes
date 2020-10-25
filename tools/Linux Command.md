@@ -17,9 +17,7 @@ sudo mount -t ntfs -o rw,auto,nobrowse /dev/disk3s1 ~/ntfs-volume
 sudo umount ~/ntfs-volume
 ```
 
-
-
-#### 压缩相关命令
+### 压缩相关命令
 
 - tar
 
@@ -105,4 +103,11 @@ sudo umount ~/ntfs-volume
   ```
 
 - 参考资料：https://blog.csdn.net/capecape/article/details/78548723 
+
+
+
+### 文本处理工具
+
+- awk
+  - https://www.ruanyifeng.com/blog/2018/11/awk.html
 
