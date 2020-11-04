@@ -111,3 +111,9 @@ sudo umount ~/ntfs-volume
 - awk
   - https://www.ruanyifeng.com/blog/2018/11/awk.html
 
+
+
+## 阮一峰的linux命令介绍 
+
+https://www.bookstack.cn/read/bash-tutorial/docs-archives-command.md
+
