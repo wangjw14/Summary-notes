@@ -220,7 +220,32 @@
 
      **Nb:** It does not preserve data that is stored inside volumes; you need to move data volumes manually to new host.
 
-     
+- 导出和导入一个docker image
+
+  1. 导出
+
+     ```shell
+     docker save -o rocketmq.tar rocketmq 
+     ##-o：指定保存的镜像的名字；rocketmq.tar：保存到本地的镜像名称；rocketmq：镜像名字，通过"docker images"查看
+     ```
+
+  2. 导入
+
+     ```sh
+     docker load --input rocketmq.tar 
+     # 或者
+     docker load < rocketmq.tar
+     ```
+
+  3. 删除
+
+     ```sh
+     docker rmi -f image_id ##-f：表示强制删除镜像；image_id：镜像id
+     ```
+
+  4. 参考资料：
+
+     Docker 本地导入镜像/保存镜像/载入镜像/删除镜像 https://www.cnblogs.com/linjiqin/p/8604756.html
 
 
 - ### 一个docker部署例子

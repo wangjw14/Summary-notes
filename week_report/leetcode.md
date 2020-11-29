@@ -379,3 +379,247 @@
   ```
 
   蓄水池采样算法（Reservoir Sampling）原理，证明和代码 https://blog.csdn.net/anshuai_aw1/article/details/88750673
+
+- 将一个数组分割成两个差值最小的部分
+
+  ```python
+  def split_nums(nums):
+      s = sum(nums)
+      half_sum = s // 2
+      length = len(nums)
+      dp = [[0]*(half_sum+1) for _ in range(length+1)]
+      
+      for i in range(1, length+1):
+          for j in range(1, half_sum+1):
+              if nums[i-1] > j :           # 这里出过错，注意
+                  dp[i][j] = dp[i-1][j]
+              else:
+                  dp[i][j] = max(dp[i-1][j], dp[i-1][j-nums[i-1]]+nums[i-1] ) 
+      i = length
+      v = half_sum 
+      a, b = [], []
+      while i >0:
+          if dp[i][v] == dp[i-1][v]:
+              b.append(nums[i-1]) 
+              
+          elif dp[i][v] == dp[i-1][j-nums[i-1]]+nums[i-1]:
+              a.append(nums[i-1])
+              v -= nums[i-1]
+          i -= 1
+      
+      return dp[-1][-1],a,b
+  
+  arr = [1, 2, 3, 4, 5]
+  print(split_nums(arr))
+  ```
+
+- [平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)
+
+  ```python
+  class Solution:
+      def isBalanced(self, root: TreeNode) -> bool:
+          def helper(node):
+              if node is None:
+                  return True, 0
+              leftBalanced, leftDepth =  helper(node.left)
+              if not leftBalanced:
+                  return False, leftDepth + 1   # 此时返回False，第二项的值无关紧要
+              rightBalabced, rightDepth = helper(node.right)
+              if not rightBalabced:
+                  return False, rightDepth + 1    # 此时返回False，第二项的值无关紧要        
+              return abs(leftDepth - rightDepth)<2 , max(rightDepth,leftDepth) + 1
+          return helper(root)[0]
+  ```
+
+  
+
+- [236. 二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
+  ```python
+  # 后续遍历
+  class Solution:
+      def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+          ans = TreeNode(None)
+          def dfs(root, p, q):
+              if root is None:
+                  return False 
+              left = dfs(root.left, p, q)
+              right = dfs(root.right, p, q)
+              if (left and right) or ((root.val==p.val or root.val==q.val) and (left or right)):
+                  ans.val = root.val 
+                  return 
+              return left or right or root.val==p.val or root.val==q.val
+          dfs(root,p,q)
+          return ans
+  ```
+
+  ```python
+  class Solution:
+      def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+          parents = {}
+          visited = set()
+          def dfs(node):
+              if node is None:
+                  return 
+              if node.left:
+                  parents[node.left.val] = node 
+                  dfs(node.left)
+              if node.right:
+                  parents[node.right.val] = node 
+                  dfs(node.right)
+          dfs(root)
+          parents[root.val] = None 
+          node = p 
+          while node:
+              visited.add(node.val)
+              node = parents[node.val] 
+          node = q
+          while node:
+              if node.val in visited:
+                  return node 
+              node = parents[node.val] 
+          return None 
+  ```
+
+- [297. 二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/)
+
+  ```python
+  class Codec:
+  
+      def serialize(self, root):
+          """Encodes a tree to a single string.
+          
+          :type root: TreeNode
+          :rtype: str
+          """
+          if root is None:
+              return ''
+          queue = collections.deque()
+          queue.append(root) 
+          res = []
+          while queue:
+              node = queue.popleft()
+              if node:
+                  res.append(str(node.val)) 
+                  queue.append(node.left)
+                  queue.append(node.right)
+              else:
+                  res.append("None") 
+          while res[-1] == "None":
+              res.pop() 
+          return ",".join(res) 
+      
+      def deserialize(self, data):
+          """Decodes your encoded data to tree.
+          
+          :type data: str
+          :rtype: TreeNode
+          """
+          if data == "":
+              return None 
+          queue = collections.deque()
+          l = data.split(',')
+          root = TreeNode(int(l[0]))
+          queue.append(root) 
+          cnt = 0
+          for v in l[1:]:
+              if cnt == 0:
+                  parent = queue.popleft()
+              if v != "None":
+                  node = TreeNode(int(v))
+                  queue.append(node) 
+                  if cnt == 0:
+                      parent.left = node 
+                  if cnt == 1:
+                      parent.right = node 
+              cnt ^= 1 
+          return root 
+  ```
+
+- #### [887. 鸡蛋掉落](https://leetcode-cn.com/problems/super-egg-drop/)
+
+  ```python
+  class Solution:
+      def superEggDrop(self, K: int, N: int) -> int:
+          memory = {}
+          def helper(k,n):
+              if (k,n) not in memory:
+                  if n == 0:
+                      res = 0
+                  elif k == 1:
+                      res = n 
+                  else:
+                      l,r = 1, n 
+                      while l+1<r:
+                          x = (l+r)//2
+                          t1 = helper(k-1,x-1)
+                          t2 = helper(k,n-x) 
+                          if t1<t2:
+                              l = x
+                          elif t1>t2:
+                              r = x
+                          else:
+                              l, r = x, x
+                      res = 1 + min([ max(helper(k-1,x-1),helper(k,n-x))  for x in (l,r) ])
+                  memory[(k,n)] = res
+              return memory[(k,n)]
+          return helper(K,N) 
+  ```
+
+- #### [410. 分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum/)
+
+  ```python
+  class Solution:
+      def splitArray(self, nums: List[int], m: int) -> int:
+          length = len(nums)
+          dp = [[sys.maxsize]*(m+1) for _ in range(length+1)]
+          dp[0][0] = 0
+          accumulate = [0] * (length+1)
+          for i in range(1,length+1):
+              accumulate[i] = accumulate[i-1] + nums[i-1] 
+          for i in range(1,length+1):
+              for j in range(1, min(i,m)+1):
+                  for k in range(i):
+                      dp[i][j] = min(dp[i][j], max(dp[k][j-1], accumulate[i]-accumulate[k]))
+          return dp[-1][-1]
+  ```
+
+  ```python
+  # O(N*log(sum-maxn))
+  class Solution:
+      def splitArray(self, nums: List[int], m: int) -> int:
+          l, r = max(nums), sum(nums)
+          while l < r:
+              mid = l+(r-l)//2
+              c = 1
+              s = 0
+              for n in nums:
+                  if s+n<=mid:
+                      s += n 
+                  else:
+                      c += 1
+                      s = n 
+              if c>m:
+                  l = mid + 1
+              else:
+                  r = mid 
+          return l 
+  ```
+
+- #### [120. 三角形最小路径和](https://leetcode-cn.com/problems/triangle/)
+
+  ```python
+  class Solution:
+      def minimumTotal(self, triangle: List[List[int]]) -> int:
+          length = len(triangle)
+          dp = [0] * length
+          dp[0] = triangle[0][0]
+          for i in range(1,length):
+              dp[i] = dp[i-1] + triangle[i][i]
+              for j in range(i-1,0,-1):
+                  dp[j] = min(dp[j-1],dp[j]) + triangle[i][j] 
+              dp[0] += triangle[i][0] 
+          return min(dp)
+  ```
+
+  
